@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project>
+    <general layer="3" bias="-0.2"/>
+
+    <material name="Fe"
+        gamma="0"
+        thickness="1"
+        temperature="300"
+        lBias="-0.2"
+        rBias="-0.2"/>
+    
+    <coupling value="-0.40"/>
+    
+    <material name="MgO"
+        gamma="0"
+        thickness="5"
+        temperature="0"
+        lBias="-0.2"
+        rBias="0"/>
+    
+    <coupling value="-0.40"/>
+    
+    <material name="Fe"
+        gamma="pi/2"
+        thickness="1"
+        temperature="300"
+        lBias="0"
+        rBias="0"/>
+    
+</project>
