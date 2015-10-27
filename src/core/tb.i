@@ -1,4 +1,4 @@
-%module tb
+%module tbpy
 %{
 
 #define SWIG_FILE_WITH_INIT
