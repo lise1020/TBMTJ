@@ -26,7 +26,7 @@ Chain::Chain(const Lead& lL, const std::string& T1, const Insulator& B, const st
 
 
 
-mat Chain::H(double o1, double o2)
+mat Chain::H(const double o1, const double o2)
 {
     //---------------------------//
     // pure H terms
@@ -60,7 +60,7 @@ mat Chain::H(double o1, double o2)
 
 
 
-cx_mat Chain::G_R(double o1, double o2, double E)
+cx_mat Chain::G_R(const double o1, const double o2, const double E)
 {
     mat  H = this->H(o1, o2);
     mat EI = E*eye<mat>(H.n_rows, H.n_cols);
@@ -77,7 +77,7 @@ cx_mat Chain::G_R(double o1, double o2, double E)
 
 
 
-cx_mat Chain::G_L(double o1, double o2, double E)
+cx_mat Chain::G_L(const double o1, const double o2, const double E)
 {
     //----------------------//
     // Sigma in 2x2
@@ -114,7 +114,7 @@ cx_mat Chain::G_L(double o1, double o2, double E)
 
 
 
-double Chain::unname_y(double o1, double o2, double E)
+double Chain::unname_y(const double o1, const double o2, const double E)
 {
     cx_mat G_ls = this->G_L(o1, o2, E);
     cx_mat22 G_bP = zeros<cx_mat>(2,2);  // bar-lead
@@ -144,7 +144,7 @@ double Chain::unname_y(double o1, double o2, double E)
 
 
 
-double Chain::unname_x(double o1, double o2, double E)
+double Chain::unname_x(const double o1, const double o2, const double E)
 {
     cx_mat G_ls = this->G_L(o1, o2, E);
     cx_mat22 G_bP = zeros<cx_mat>(2,2);  // bar-lead
@@ -174,7 +174,7 @@ double Chain::unname_x(double o1, double o2, double E)
 
 
 
-double Chain::unname_z(double o1, double o2, double E)
+double Chain::unname_z(const double o1, const double o2, const double E)
 {
     cx_mat G_ls = this->G_L(o1, o2, E);
     cx_mat22 G_bP = zeros<cx_mat>(2,2);  // bar-lead
@@ -203,7 +203,7 @@ double Chain::unname_z(double o1, double o2, double E)
 }
 
 
-std::vector<double> Chain::unname2(double o1, double o2, double E)
+std::vector<double> Chain::unname2(const double o1, const double o2, const double E)
 {
     cx_mat G_ls = this->G_L(o1, o2, E);
     cx_mat22 G_bP = zeros<cx_mat>(2,2);  // bar-lead

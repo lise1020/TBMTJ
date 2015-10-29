@@ -26,6 +26,7 @@ public:
     double unname_z(double o1, double o2, double E);
     std::vector<double> unname2(double o1, double o2, double E);
 
+
 /*private:
 
 	   mat   _H;

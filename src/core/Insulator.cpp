@@ -2,7 +2,7 @@
 
 
 
-Insulator::Insulator(double e_up, double e_dn, double t_up, double t_dn, int numAtom, double gamma, double bias_l, double bias_r)
+Insulator::Insulator(const double e_up, const double e_dn, const double t_up, const double t_dn, const int numAtom, const double gamma, const double bias_l, const double bias_r)
 {
     this->gamma = gamma;
     this->numAtom = numAtom;
@@ -13,7 +13,7 @@ Insulator::Insulator(double e_up, double e_dn, double t_up, double t_dn, int num
 
 
 
-vector<Atom> Insulator::initAtoms(double e_up, double e_dn, double t_up, double t_dn, double gamma, double numAtom, double bias_l, double bias_r)
+vector<Atom> Insulator::initAtoms(const double e_up, const double e_dn, const double t_up, const double t_dn, const double gamma, const double numAtom, const double bias_l, const double bias_r)
 {
     vector<Atom> atoms;
     double dV;
@@ -33,10 +33,10 @@ vector<Atom> Insulator::initAtoms(double e_up, double e_dn, double t_up, double 
 
 
 
-mat Insulator::H(double o1, double o2)
+mat Insulator::H(const double o1, const double o2)
 {
-    mat* arrE = new mat[numAtom];
-    mat* arrT = new mat[numAtom-1];
+    mat* arrE = new mat[this->numAtom];
+    mat* arrT = new mat[this->numAtom-1];
     //unique_ptr< mat[] > arrE( new mat[numAtom] );
     //unique_ptr< mat[] > arrT( new mat[numAtom-1] );
 
@@ -54,8 +54,8 @@ mat Insulator::H(double o1, double o2)
 
 
     if(numAtom <= 1) return arrE[0];
-    mat E = blockDiag(numAtom,arrE);
-    mat T = blockDiag(numAtom-1,arrT);
+    mat E = blockDiag(this->numAtom,arrE);
+    mat T = blockDiag(this->numAtom-1,arrT);
 
     delete [] arrE;
     delete [] arrT;

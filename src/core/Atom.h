@@ -15,8 +15,8 @@ public:
     OnsiteEnergy onsiteE;
     HoppingElement hopping;
 
-    Atom(){};
-    Atom(double e_up, double e_dn, double t_up, double t_dn, double gamma, double bias);
+    Atom(){}
+    Atom(const double e_up, const double e_dn, const double t_up, const double t_dn, const double gamma, const double bias);
 };
 
 

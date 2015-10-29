@@ -14,13 +14,13 @@ public:
     double bias_l, bias_r;
     std::vector<Atom> atoms;
 
-    Insulator(){};
-    Insulator(double e_up, double e_dn, double t_up, double t_dn, int numAtom, double gamma=0.0, double bias_l=0, double bias_r=0);
-    mat H(double o1, double o2);
+    Insulator(){}
+    Insulator(const double e_up, const double e_dn, const double t_up, const double t_dn, const int numAtom, const double gamma=0.0, const double bias_l=0, const double bias_r=0);
+    mat H(const double o1, const double o2);
 
 
 private:
-    std::vector<Atom> initAtoms(double e_up, double e_dn, double t_up, double t_dn, double gamma, double numAtom, double bias_l=0, double bias_r=0);
+    std::vector<Atom> initAtoms(const double e_up, const double e_dn, const double t_up, const double t_dn, const double gamma, const double numAtom, const double bias_l=0, const double bias_r=0);
 };
 
 

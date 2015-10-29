@@ -13,12 +13,15 @@ public:
     int numAtom;
     double temperature;
 
-    Lead(){};
-    Lead(double e_up, double e_dn, double t_up, double t_dn, double temperature, double gamma=0.0, double bias=0.0);
-    cx_mat22 G_inf(double x1, double x2, double o1, double o2, double E);
-    cx_mat22 G_sinf(double x1, double x2, double o1, double o2, double E);
-    cx_mat22 S(double o1, double o2, double E);
-    mat22 H(double o1, double o2);
+    Lead(){}
+    Lead(const double e_up, const double e_dn, const double t_up, const double t_dn, const double temperature, const double gamma=0.0, const double bias=0.0);
+    cx_mat22 G_inf(const double x1, const double x2, const double o1, const double o2, const double E);
+    cx_mat22 G_sinf(const double x1, const double x2, const double o1, const double o2, const double E);
+    cx_mat22 S(const double o1, const double o2, const double E);
+    mat22 H(const double o1, const double o2);
+
+
+    //map<string,cx_mat22> G;
 };
 
 

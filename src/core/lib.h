@@ -12,7 +12,7 @@ public:
     double t_up, t_dn;
     double gamma;
 
-    OnsiteEnergy(){};
+    OnsiteEnergy(){}
     OnsiteEnergy(double e_up, double e_dn, double t_up, double t_dn, double gamma);
     mat22 inKspace(double o1, double o2);
 };
@@ -23,15 +23,16 @@ class HoppingElement: public mat22
 {
 public:
 
-    HoppingElement(){};
+    HoppingElement(){}
     HoppingElement(double t_up, double t_dn, double gamma);
 };
 
 
 
+/// ???
 const double d = 1E-6;
 
-/// 2x2 GF in spin space G' = U.inv * G * U
+/// 2x2 GF in spin space: G' = U.inv * G * U
 mat22 toSpinSpace(double up, double dn, double gamma);
 
 /// Fermi-Dirac distribution
@@ -39,7 +40,7 @@ double fermiD(double E, double T);
 
 
 
-/// Unitary trasformation A' = U * A * U.H
+/// Unitary trasformation: A' = U * A * U.H
 template <class MAT> MAT unitaryTransform(const MAT& M, const double gamma)
 {
     auto U = [](double g) -> MAT { MAT A = {cos(g/2), sin(g/2), -sin(g/2), cos(g/2)}; return A; };

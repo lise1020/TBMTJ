@@ -2,16 +2,23 @@
 
 
 
-Lead::Lead(double e_up, double e_dn, double t_up, double t_dn, double temperature, double gamma, double bias):
+Lead::Lead(const double e_up, const double e_dn, const double t_up, const double t_dn, const double temperature, const double gamma, const double bias):
 Atom(e_up, e_dn, t_up, t_dn, gamma, bias)
 {
     this->numAtom = 1;
     this->temperature = temperature;
+
+    /*G["x1x2"] = cx_mat22();
+    G["x1 0"] = cx_mat22();
+    G["x1-1"] = cx_mat22();
+    G["-8-1"] = cx_mat22();
+    G["-8 0"] = cx_mat22();
+    G["-1x2"] = cx_mat22();*/
 }
 
 
 
-cx_mat22 Lead::G_inf(double x1, double x2, double o1, double o2, double E)
+cx_mat22 Lead::G_inf(const double x1, const double x2, const double o1, const double o2, const double E)
 {
     cx_double Ed(E,d);
 
@@ -34,7 +41,7 @@ cx_mat22 Lead::G_inf(double x1, double x2, double o1, double o2, double E)
 
 
 
-cx_mat22 Lead::G_sinf(double x1, double x2, double o1, double o2, double E)
+cx_mat22 Lead::G_sinf(const double x1, const double x2, const double o1, const double o2, const double E)
 {
     map<string,cx_mat22> G = {
 
@@ -45,6 +52,12 @@ cx_mat22 Lead::G_sinf(double x1, double x2, double o1, double o2, double E)
         { "-8 0", this->G_inf(-8,  0, o1, o2, E) },
         { "-1x2", this->G_inf(-1, x2, o1, o2, E) }
     };
+    /*G["x1x2"] = this->G_inf(x1, x2, o1, o2, E);
+    G["x1 0"] = this->G_inf(x1,  0, o1, o2, E);
+    G["x1-1"] = this->G_inf(x1, -1, o1, o2, E);
+    G["-8-1"] = this->G_inf(-8, -1, o1, o2, E);
+    G["-8 0"] = this->G_inf(-8,  0, o1, o2, E);
+    G["-1x2"] = this->G_inf(-1, x2, o1, o2, E);*/ ///TODO SAVE about 0.1 sec for 1000 runs
 
     cx_mat22 innerTerm = G["x1 0"] - G["-8 0"]*G["-8-1"].i()*G["x1-1"];
     return G["x1x2"] - innerTerm*this->hopping*G["-1x2"];
@@ -52,7 +65,7 @@ cx_mat22 Lead::G_sinf(double x1, double x2, double o1, double o2, double E)
 
 
 
-cx_mat22 Lead::S(double o1, double o2, double E)
+cx_mat22 Lead::S(const double o1, const double o2, const double E)
 {
     HoppingElement T = this->hopping;
     cx_mat22 g = this->G_sinf(0, 0, o1, o2, E);
@@ -61,7 +74,7 @@ cx_mat22 Lead::S(double o1, double o2, double E)
 
 
 
-mat22 Lead::H(double o1, double o2)
+mat22 Lead::H(const double o1, const double o2)
 {
     return this->onsiteE.inKspace(o1, o2);
 }
