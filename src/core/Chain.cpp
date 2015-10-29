@@ -1,4 +1,5 @@
 #include "Chain.h"
+#include <cstdarg>
 
 
 
@@ -22,6 +23,23 @@ Chain::Chain(const Lead& lL, const std::string& T1, const Insulator& B, const st
 
     this->T1 = mat22(T1);
     this->T2 = mat22(T2);
+}
+
+
+
+Chain Chain::operator<<(const Lead& obj)
+{
+    this->leadL = obj;
+}
+
+Chain Chain::operator<<(const Insulator& obj)
+{
+    this->barrier2.push_back(obj);
+}
+
+Chain Chain::operator<<(const std::string& obj)
+{
+    this->TT.push_back(obj);
 }
 
 

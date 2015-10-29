@@ -4,7 +4,6 @@ project(tb)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin )
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib )
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib )
 set(SOURCE_FILES Atom.cpp Atom.h Chain.cpp Chain.h Insulator.cpp Insulator.h Lead.cpp Lead.h lib.cpp lib.h general.h TB.h)
 
 
@@ -25,7 +24,7 @@ set(SOURCE_FILES Atom.cpp Atom.h Chain.cpp Chain.h Insulator.cpp Insulator.h Lea
 
 # Generate "libtb.so"
 add_library(tb SHARED ${SOURCE_FILES})
-#add_library(tb_static STATIC ${SOURCE_FILES})
+
 
 # Generate "tbpy.py" and "_tbpy.so"
 SWIG_ADD_MODULE(tbpy python tb.i ${SOURCES_FILES})

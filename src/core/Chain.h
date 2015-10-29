@@ -13,8 +13,18 @@ public:
     Insulator barrier;
     mat22 T1, T2;
 
+    vector<Insulator> barrier2;
+    vector<mat22> TT;
+
+
+    /// (lL)-(T1)-(B)-(T2)-(lR)
     Chain(const Lead& lL, const arma::mat& T1, const Insulator& B, const arma::mat& T2, const Lead& lR);
     Chain(const Lead& lL, const std::string& T1, const Insulator& B, const std::string& T2, const Lead& lR);
+
+    Chain operator<<(const Lead& obj);
+    Chain operator<<(const Insulator& obj);
+    Chain operator<<(const std::string& obj);
+
        mat H(const double o1, const double o2);
     cx_mat G_R(const double o1, const double o2, const double E);
   //cx_mat G_A(const double o1, const double o2, const double E);
