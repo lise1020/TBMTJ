@@ -27,19 +27,22 @@ Chain::Chain(const Lead& lL, const std::string& T1, const Insulator& B, const st
 
 
 
-Chain Chain::operator<<(const Lead& obj)
+Chain& Chain::operator<<(const Lead& obj)
 {
-    this->leadL = obj;
+    this->lead.push_back(obj);
+    return *this;
 }
 
-Chain Chain::operator<<(const Insulator& obj)
+Chain& Chain::operator<<(const Insulator& obj)
 {
     this->barrier2.push_back(obj);
+    return *this;
 }
 
-Chain Chain::operator<<(const std::string& obj)
+Chain& Chain::operator<<(const std::string& obj)
 {
     this->TT.push_back(obj);
+    return *this;
 }
 
 
