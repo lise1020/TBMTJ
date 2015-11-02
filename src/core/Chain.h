@@ -9,14 +9,15 @@ class Chain
 {
 public:
 
-    Lead leadL, leadR;
-    Insulator barrier;
-    mat22 T1, T2;
+    //Lead leadL, leadR;
+    //Insulator barrier;
+    //mat22 T1, T2;
 
-    vector<Insulator> barrier2;
-    vector<mat22> TT;
     vector<Lead> lead;
+    vector<Insulator> barrier;
+    vector<mat22> couplingT;
 
+    Chain(){}
 
     /// (lL)-(T1)-(B)-(T2)-(lR)
     Chain(const Lead& lL, const arma::mat& T1, const Insulator& B, const arma::mat& T2, const Lead& lR);
@@ -38,9 +39,11 @@ public:
     std::vector<double> unname2(double o1, double o2, double E);
 
 
-/*private:
+private:
 
-	   mat   _H;
+    int _numLead = 0;
+    int _numBarrier = 0;
+    /*   mat   _H;
 	cx_mat _G_R;
 	cx_mat _G_L;*/
 

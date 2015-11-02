@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.0)
 project(tb)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+SET(CMAKE_CXX_WARNING_LEVEL 4)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin )
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib )
 set(SOURCE_FILES Atom.cpp Atom.h Chain.cpp Chain.h Insulator.cpp Insulator.h Lead.cpp Lead.h lib.cpp lib.h general.h TB.h)
@@ -17,6 +18,7 @@ set(SOURCE_FILES Atom.cpp Atom.h Chain.cpp Chain.h Insulator.cpp Insulator.h Lea
     INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 
     SET(CMAKE_SWIG_FLAGS "-Wall")
+    SET(CMAKE_SWIG_OUTDIR ${CMAKE_BINARY_DIR}/lib)
 
     SET_SOURCE_FILES_PROPERTIES(tb.i PROPERTIES CPLUSPLUS ON)
     SET_PROPERTY(SOURCE tb.i PROPERTY SWIG_FLAGS "-builtin")

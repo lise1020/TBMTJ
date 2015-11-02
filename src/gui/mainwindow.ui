@@ -545,6 +545,8 @@ QGroupBox::title
     <addaction name="action_New_Project"/>
     <addaction name="action_Open_Project"/>
     <addaction name="action_Open_Example"/>
+    <addaction name="separator"/>
+    <addaction name="action_Save_File"/>
    </widget>
    <widget class="QMenu" name="menu_Run">
     <property name="title">
@@ -636,6 +638,11 @@ QGroupBox::title
    </property>
    <property name="text">
     <string>&amp;Plot</string>
+   </property>
+  </action>
+  <action name="action_Save_File">
+   <property name="text">
+    <string>&amp;Save Project</string>
    </property>
   </action>
  </widget>

@@ -1,36 +1,42 @@
 #ifndef SPEC
 #define SPEC
-
 #include <QVector>
-#include <QVariant>
 
 
 
-class MaterialSpec
+struct LeadSpec
 {
-public:
-    QString name;
-    QString thickness;
-    QString e_up, e_dn;
-    QString t_up, t_dn;
-    QString gamma, temperature;
-    QString lBias, rBias;
-    MaterialSpec(){}
-    QVariant toQVariant();
+    QString name="";
+    QString e_up="";
+    QString e_dn="";
+    QString t_up="";
+    QString t_dn="";
+    QString gamma="";
+    QString temperature="";
 };
 
 
 
-class ChainSpec
+struct BarrierSpec
 {
-public:
-    QVector<MaterialSpec> materials;
+    QString name="";
+    QString e_up="";
+    QString e_dn="";
+    QString t_up="";
+    QString t_dn="";
+    QString gamma="";
+    QString thickness="";
+};
+
+
+
+struct ChainSpec
+{
+    QVector<LeadSpec> leads;
+    QVector<BarrierSpec> barriers;
     QVector<QString> couplings;
-    ChainSpec(){}
-    QVariant toQVariant();
 };
 
 
 
 #endif // SPEC
-

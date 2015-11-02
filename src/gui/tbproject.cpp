@@ -1,96 +1,115 @@
 #include "tbproject.h"
 #include "PythonQtScriptingConsole.h"
+#include <QDir>
+#include <QApplication>
+#include <PythonQt.h>
+#include <QXmlStreamWriter>
 
 
 
 TBProject::TBProject()
 {
-
-}
-
-
-
-void TBProject::initDatabase()
-{
-    QDir rootDir = QDir( QCoreApplication::applicationDirPath() );
-    rootDir.cdUp();
-    QString resPath = rootDir.path() + "/res";
-    QString filename = resPath + "/database.xml";
-
-
-    QDomDocument dom;
-    QFile *file = new QFile(filename);
-    if (file->open(QIODevice::ReadOnly))
-    {
-        dom.setContent(file); // 此处需做错误判断
-    }
-    file->close();
-
-
-    QDomNodeList materials = dom.elementsByTagName("material");
-    for(int i=0; i<materials.count(); i++)
-    {
-        QDomNode material = materials.item(i);
-        QString materialName = material.toElement().attribute("name");
-        this->database.insert( materialName,material );
-    }
+    //
 }
 
 
 
 TBProject::TBProject(QString filename)
 {
-    this->initDatabase();
+    projectFilename = filename;
+}
+
+
+
+void TBProject::loadProject(QString filename)
+{
+    projectFilename = filename;
+
 
     //// Open file
     QDomDocument dom;
-    QFile *file = new QFile(filename);
-    if (file->open(QIODevice::ReadOnly))
-    {
-        dom.setContent(file); // 此处需做错误判断
-    }
+    QFile* file = new QFile(projectFilename);
+    if (file->open(QIODevice::ReadOnly)) dom.setContent(file);
     file->close();
+    delete file;
 
 
-    /// Get terms: general
-    //QDomNodeList generals = dom.elementsByTagName("general");
-    //QDomNode general = generals.item(0);
-    //ui->lineEdit_bias->setText( general.toElement().attribute("bias") );
-
-
-    this->userParameters = ChainSpec();
-
-    /// Get terms: material
-    QDomNodeList materials = dom.elementsByTagName("material");
-    for(int i=0; i<materials.count(); i++)
+    /// Get terms: Lead
+    QDomNodeList leads = dom.elementsByTagName("lead");
+    for(int i=0; i<2; i++)
     {
-        MaterialSpec materialSpec = MaterialSpec();
+        LeadSpec leadSpec = LeadSpec();
 
-        QDomNode material = materials.item(i);
-        QString materialName = material.toElement().attribute("name");
-        materialSpec.name = materialName;
-        materialSpec.e_up = this->database[materialName].toElement().attribute("e_up");
-        materialSpec.e_dn = this->database[materialName].toElement().attribute("e_dn");
-        materialSpec.t_up = this->database[materialName].toElement().attribute("t_up");
-        materialSpec.t_dn = this->database[materialName].toElement().attribute("t_dn");
-        materialSpec.gamma = material.toElement().attribute("gamma");
-        materialSpec.thickness = material.toElement().attribute("thickness");
-        materialSpec.temperature = material.toElement().attribute("temperature");
-        materialSpec.lBias = material.toElement().attribute("lBias");
-        materialSpec.rBias = material.toElement().attribute("rBias");
+        QDomNode lead = leads.item(i);
+        leadSpec.name = lead.toElement().attribute("name");
+        leadSpec.e_up = lead.toElement().attribute("e_up");
+        leadSpec.e_dn = lead.toElement().attribute("e_dn");
+        leadSpec.t_up = lead.toElement().attribute("t_up");
+        leadSpec.t_dn = lead.toElement().attribute("t_dn");
+        leadSpec.gamma = lead.toElement().attribute("gamma");
+        leadSpec.temperature = lead.toElement().attribute("temperature");
 
-        this->userParameters.materials.append(materialSpec);
+        userParameters.leads.append(leadSpec);
     }
 
 
-    /// Get terms: coupling
-    QDomNodeList couplings = dom.elementsByTagName("coupling");
-    for(int i=0; i<couplings.count(); i++)
+    /// Get terms: Barrier
+    QDomNodeList barriers = dom.elementsByTagName("barrier");
+    for(int i=0; i<barriers.count(); i++)
     {
-        QDomNode coupling = couplings.item(i);
-        QString value = coupling.toElement().attribute("value");
-        this->userParameters.couplings.append(value);
+        BarrierSpec barrierSpec = BarrierSpec();
+
+        QDomNode barrier = barriers.item(i);
+        barrierSpec.name = barrier.toElement().attribute("name");
+        barrierSpec.e_up = barrier.toElement().attribute("e_up");
+        barrierSpec.e_dn = barrier.toElement().attribute("e_dn");
+        barrierSpec.t_up = barrier.toElement().attribute("t_up");
+        barrierSpec.t_dn = barrier.toElement().attribute("t_dn");
+        barrierSpec.gamma = barrier.toElement().attribute("gamma");
+
+        userParameters.barriers.append(barrierSpec);
     }
+}
+
+
+
+bool TBProject::saveProject()
+{
+    /// Open file
+    QFile file(projectFilename);
+    if(!file.open(QFile::WriteOnly | QFile::Text))
+    {
+        qDebug() << "Error: Cannot write file: "
+                 << qPrintable(file.errorString());
+        return false;
+    }
+
+
+    /// Write to file
+    QXmlStreamWriter xmlWriter(&file);
+    xmlWriter.setAutoFormatting(true);
+    xmlWriter.writeStartDocument();
+    xmlWriter.writeStartElement("project");
+    for(int i=0; i<userParameters.leads.count(); i++)
+    {
+        LeadSpec lead = userParameters.leads[i];
+        xmlWriter.writeStartElement("lead");
+        xmlWriter.writeAttribute("e_up",lead.e_up);
+        xmlWriter.writeEndElement();
+    }
+    xmlWriter.writeEndElement();
+    xmlWriter.writeEndDocument();
+
+
+    /// Close file
+    file.close();
+    if (file.error())
+    {
+        qDebug() << "Error: Cannot write file: "
+                 << qPrintable(file.errorString());
+        return false;
+    }
+    return true;
 }
 
 
@@ -100,9 +119,11 @@ ChainSpec TBProject::getUserParameters()
     return this->userParameters;
 }
 
-QMap< QString,QDomNode > TBProject::getDatabase()
+
+
+void TBProject::setUserParameters(const ChainSpec& data)
 {
-    return this->database;
+    userParameters = data;
 }
 
 
@@ -126,7 +147,7 @@ void TBProject::run()
 
 
 
-    mainModule.addVariable("userParameters_c", userParameters.toQVariant());
+    //mainModule.addVariable("userParameters_c", userParameters.toQVariant());
     mainModule.evalFile(":TBApp.py");
 }
 
