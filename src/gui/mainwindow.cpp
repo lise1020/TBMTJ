@@ -1,23 +1,28 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QStandardPaths>
+#include "portalwindow.h"
 #include <QFileDialog>
-#include <QCoreApplication>
+#include <QStandardPaths>
+#include <QMessageBox>
+#include <QCloseEvent>
 
 
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    setActive(false);
-    mProject = TBProject();
+    project = new TBProject;
+    setCentralWidget(project);
+    setAttribute(Qt::WA_DeleteOnClose);
 
-    connect( ui->action_New_Project , SIGNAL(triggered(bool)), this, SLOT(onClick_newProject())  );
-    connect( ui->action_Open_Project, SIGNAL(triggered(bool)), this, SLOT(onClick_openProject()) );
-    connect( ui->action_Open_Example, SIGNAL(triggered(bool)), this, SLOT(onClick_openExample()) );
-    connect( ui->action_Save_File   , SIGNAL(triggered(bool)), this, SLOT(onClick_saveProject()) );
-
-    connect(ui->action_Run, SIGNAL(triggered(bool)), this, SLOT(onClick_runProject()));
+    connect( ui->action_newProject , SIGNAL(triggered(bool)), this, SLOT(onClick_newProject())  );
+    connect( ui->action_openProject, SIGNAL(triggered(bool)), this, SLOT(onClick_openProject()) );
+    connect( ui->action_openExample, SIGNAL(triggered(bool)), this, SLOT(onClick_openExample()) );
+    connect( ui->action_save       , SIGNAL(triggered(bool)), this, SLOT(onClick_save())        );
+    connect( ui->action_saveAs     , SIGNAL(triggered(bool)), this, SLOT(onClick_saveAs())      );
+    connect( ui->action_close      , SIGNAL(triggered(bool)), this, SLOT(close())               );
+    connect( ui->action_exit       , SIGNAL(triggered(bool)), qApp, SLOT(closeAllWindows())     );
+    connect( ui->action_about      , SIGNAL(triggered(bool)), this, SLOT(onClick_about())       );
 }
 
 
@@ -29,31 +34,15 @@ MainWindow::~MainWindow()
 
 
 
-void MainWindow::setActive(bool state)
-{
-    if(state)
-    {
-        ui->centralwidget->setVisible(true);
-        ui->action_Run->setEnabled(true);
-        ui->action_Stop->setEnabled(true);
-    }
-    else
-    {
-        ui->centralwidget->setVisible(false);
-        ui->action_Run->setEnabled(false);
-        ui->action_Stop->setEnabled(false);
-    }
-}
-
-
-
 void MainWindow::onClick_newProject()
 {
-    QString home = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-    QString filename = QFileDialog::getSaveFileName(this, "New Project", home, "*.tb");
-    filename += ".tb";
-    mProject = TBProject(filename);
-    setActive(true);
+    MainWindow* mainWindow = new MainWindow;
+    mainWindow->show();
+    //PortalWindow* portal = new PortalWindow(this);
+    //portal->show();
+    //portal->raise();
+    //portal->activateWindow();
+    // TODO: portal
 }
 
 
@@ -61,115 +50,111 @@ void MainWindow::onClick_newProject()
 void MainWindow::onClick_openProject()
 {
     QString home = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-    QString filename = QFileDialog::getOpenFileName(this, "Open Project", home, "*.tb");
-    mProject.loadProject(filename);
-    renewParameterPanel();
-    setActive(true);
+    QString filename = QFileDialog::getOpenFileName(this, tr("Open Project"), home, tr("TBMTJ files (*.tb)"));
+    if(!filename.isEmpty()) loadFile(filename);
 }
 
 
 
 void MainWindow::onClick_openExample()
 {
-    QDir rootDir = QDir( QCoreApplication::applicationDirPath() ); rootDir.cdUp();
-    QString examplePath = rootDir.path() + "/examples";
-    QString filename = QFileDialog::getOpenFileName(this, "Open Example Project", examplePath, "*.tb");
-    mProject.loadProject(filename);
-    renewParameterPanel();
-    setActive(true);
+    // TODO: open example
 }
 
 
 
-void MainWindow::onClick_saveProject()
+bool MainWindow::onClick_save()
 {
-    ChainSpec chainSpec;
+    if(currentFile.isEmpty()) return onClick_saveAs();
+    else return saveFile(currentFile);
+}
 
 
-    /// Lead
-    for(int i=0; i<2; i++)
+
+bool MainWindow::onClick_saveAs()
+{
+    QString home = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save Project"), home, tr("TBMTJ files (*.tb)"));
+    if(filename.isEmpty()) return false;
+    return saveFile(filename);
+}
+
+
+
+void MainWindow::onClick_about()
+{
+    QString msg = tr("<h2>TBMTJ x.x</h2>"
+                     "<p>Copyright &copy; 2015 LabSTT"
+                     "<p>Powered by LISE");
+    QMessageBox::about(this, tr("About TBMTJ"), msg);
+}
+
+
+
+bool MainWindow::loadFile(const QString& filename)
+{
+    if(!project->readProject(filename))
     {
-        LeadSpec lead;
-        lead.e_up = ui->lineEdit_1_1->text();
-        lead.e_dn = ui->lineEdit_1_2->text();
-        lead.t_up = ui->lineEdit_1_3->text();
-        lead.t_dn = ui->lineEdit_1_4->text();
-        lead.gamma = ui->lineEdit_1_5->text();
-        lead.temperature = ui->lineEdit_1_7->text();
-        chainSpec.leads.append(lead);
+        statusBar()->showMessage(tr("Loading canceled"), 2000);
+        return false;
     }
 
+    setCurrentFile(filename);
+    statusBar()->showMessage(tr("Project loaded"), 2000);
+    return true;
+}
 
-    /// Barrier
-    for(int i=0; i<1; i++) //TODO
+
+
+bool MainWindow::saveFile(const QString &filename)
+{
+    if(!project->writeProject(filename))
     {
-        BarrierSpec barrier;
-        barrier.e_up = ui->lineEdit_2_1->text();
-        barrier.e_dn = ui->lineEdit_2_2->text();
-        barrier.t_up = ui->lineEdit_2_3->text();
-        barrier.t_dn = ui->lineEdit_2_4->text();
-        barrier.gamma = ui->lineEdit_2_5->text();
-        barrier.thickness = ui->lineEdit_2_6->text();
-        chainSpec.barriers.append(barrier);
+        statusBar()->showMessage(tr("Writing canceled"), 2000);
+        return false;
     }
 
-
-    mProject.setUserParameters(chainSpec);
-    mProject.saveProject();
+    setCurrentFile(filename);
+    statusBar()->showMessage(tr("Project saved"), 2000);
+    return true;
 }
 
 
 
-void MainWindow::onClick_runProject()
+bool MainWindow::okToContinue()
 {
-    //QLabel* label = new QLabel("Process running");
-    //ui->statusbar->addWidget(label);
-    this->mProject.run();
-    //ui->statusbar->removeWidget(label);
+    if(isWindowModified())
+    {
+        QString msg = tr("The project has been modified.\nDo you want to save your changes?");
+        int r = QMessageBox::warning(this, tr("Project"), msg, QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+
+        if(r==QMessageBox::Yes) return onClick_save();
+        else if(r==QMessageBox::Cancel) return false;
+    }
+    return true;
 }
 
 
 
-void MainWindow::onClick_plot()
+void MainWindow::setCurrentFile(const QString& filename)
 {
-    //
+    currentFile = filename;
+    setWindowModified(false);
+
+    QString shownName = tr("Untitled");
+    if(!currentFile.isEmpty())
+    {
+        QString strippedName = QFileInfo(currentFile).fileName();
+        shownName = strippedName;
+        // TODO: recent files
+    }
+    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg(tr("TB Project")));
 }
 
 
-
-void MainWindow::renewParameterPanel()
+// TODO: 沒作用??
+void MainWindow::closeEvent(QCloseEvent* event)
 {
-    ChainSpec userParameters = mProject.getUserParameters();
-
-    this->ui->lineEdit_1_1->setText( userParameters.leads[0].e_up );
-    this->ui->lineEdit_1_2->setText( userParameters.leads[0].e_dn );
-    this->ui->lineEdit_1_3->setText( userParameters.leads[0].t_up );
-    this->ui->lineEdit_1_4->setText( userParameters.leads[0].t_dn );
-    this->ui->lineEdit_1_5->setText( userParameters.leads[0].gamma );
-    //this->ui->lineEdit_1_6->setText( userParameters.leads[0].thickness );
-    this->ui->lineEdit_1_7->setText( userParameters.leads[0].temperature );
-
-    this->ui->lineEdit_3_1->setText( userParameters.leads[1].e_up );
-    this->ui->lineEdit_3_2->setText( userParameters.leads[1].e_dn );
-    this->ui->lineEdit_3_3->setText( userParameters.leads[1].t_up );
-    this->ui->lineEdit_3_4->setText( userParameters.leads[1].t_dn );
-    this->ui->lineEdit_3_5->setText( userParameters.leads[1].gamma );
-    //this->ui->lineEdit_3_6->setText( userParameters.leads[1].thickness );
-    this->ui->lineEdit_3_7->setText( userParameters.leads[1].temperature );
-
-    this->ui->lineEdit_2_1->setText( userParameters.barriers[0].e_up );
-    this->ui->lineEdit_2_2->setText( userParameters.barriers[0].e_dn );
-    this->ui->lineEdit_2_3->setText( userParameters.barriers[0].t_up );
-    this->ui->lineEdit_2_4->setText( userParameters.barriers[0].t_dn );
-    this->ui->lineEdit_2_5->setText( userParameters.barriers[0].gamma );
-    this->ui->lineEdit_2_6->setText( userParameters.barriers[0].thickness );
-    //this->ui->lineEdit_2_7->setText( userParameters.barriers[0].temperature );
-
-    //this->ui->lineEdit_coupling_1->setText( userParameters.couplings[0] );
-    //this->ui->lineEdit_coupling_2->setText( userParameters.couplings[1] );
-
-    //TODO
-    //this->ui->comboBox_material_1->addItem( userParameters.materials[0].name );
-    //this->ui->comboBox_material_2->addItem( userParameters.materials[1].name );
-    //this->ui->comboBox_material_3->addItem( userParameters.materials[2].name );
+    if(okToContinue()) event->accept();
+    else event->ignore();
 }

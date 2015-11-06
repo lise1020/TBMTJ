@@ -1,153 +1,110 @@
 #include "tbproject.h"
-#include "PythonQtScriptingConsole.h"
-#include <QDir>
-#include <QApplication>
-#include <PythonQt.h>
+#include "ui_tbproject.h"
+#include "schema3layer.h"
+#include <QMessageBox>
+#include <QFile>
 #include <QXmlStreamWriter>
+#include <QXmlStreamReader>
 
 
 
-TBProject::TBProject()
+TBProject::TBProject(QWidget *parent): QWidget(parent), ui(new Ui::TBProject)
 {
-    //
+    ui->setupUi(this);
 }
 
 
 
-TBProject::TBProject(QString filename)
+TBProject::~TBProject()
 {
-    projectFilename = filename;
+    delete ui;
 }
 
 
 
-void TBProject::loadProject(QString filename)
+bool TBProject::readProject(const QString &filename)
 {
-    projectFilename = filename;
-
-
-    //// Open file
-    QDomDocument dom;
-    QFile* file = new QFile(projectFilename);
-    if (file->open(QIODevice::ReadOnly)) dom.setContent(file);
-    file->close();
-    delete file;
-
-
-    /// Get terms: Lead
-    QDomNodeList leads = dom.elementsByTagName("lead");
-    for(int i=0; i<2; i++)
+    QFile file(filename);
+    if(!file.open(QIODevice::ReadOnly))
     {
-        LeadSpec leadSpec = LeadSpec();
-
-        QDomNode lead = leads.item(i);
-        leadSpec.name = lead.toElement().attribute("name");
-        leadSpec.e_up = lead.toElement().attribute("e_up");
-        leadSpec.e_dn = lead.toElement().attribute("e_dn");
-        leadSpec.t_up = lead.toElement().attribute("t_up");
-        leadSpec.t_dn = lead.toElement().attribute("t_dn");
-        leadSpec.gamma = lead.toElement().attribute("gamma");
-        leadSpec.temperature = lead.toElement().attribute("temperature");
-
-        userParameters.leads.append(leadSpec);
-    }
-
-
-    /// Get terms: Barrier
-    QDomNodeList barriers = dom.elementsByTagName("barrier");
-    for(int i=0; i<barriers.count(); i++)
-    {
-        BarrierSpec barrierSpec = BarrierSpec();
-
-        QDomNode barrier = barriers.item(i);
-        barrierSpec.name = barrier.toElement().attribute("name");
-        barrierSpec.e_up = barrier.toElement().attribute("e_up");
-        barrierSpec.e_dn = barrier.toElement().attribute("e_dn");
-        barrierSpec.t_up = barrier.toElement().attribute("t_up");
-        barrierSpec.t_dn = barrier.toElement().attribute("t_dn");
-        barrierSpec.gamma = barrier.toElement().attribute("gamma");
-
-        userParameters.barriers.append(barrierSpec);
-    }
-}
-
-
-
-bool TBProject::saveProject()
-{
-    /// Open file
-    QFile file(projectFilename);
-    if(!file.open(QFile::WriteOnly | QFile::Text))
-    {
-        qDebug() << "Error: Cannot write file: "
-                 << qPrintable(file.errorString());
+        QMessageBox::warning(this, tr("TB Project"), tr("Cannot read file %1:\n%2.").arg(file.fileName()).arg(file.errorString()));
         return false;
     }
 
 
-    /// Write to file
-    QXmlStreamWriter xmlWriter(&file);
-    xmlWriter.setAutoFormatting(true);
-    xmlWriter.writeStartDocument();
-    xmlWriter.writeStartElement("project");
-    for(int i=0; i<userParameters.leads.count(); i++)
-    {
-        LeadSpec lead = userParameters.leads[i];
-        xmlWriter.writeStartElement("lead");
-        xmlWriter.writeAttribute("e_up",lead.e_up);
-        xmlWriter.writeEndElement();
-    }
-    xmlWriter.writeEndElement();
-    xmlWriter.writeEndDocument();
+    QXmlStreamReader reader(&file);
+    //TODO read file
 
 
-    /// Close file
-    file.close();
-    if (file.error())
-    {
-        qDebug() << "Error: Cannot write file: "
-                 << qPrintable(file.errorString());
-        return false;
-    }
+
     return true;
 }
 
 
 
-ChainSpec TBProject::getUserParameters()
+bool TBProject::writeProject(const QString &filename)
 {
-    return this->userParameters;
+    QFile file(filename);
+    if(!file.open(QIODevice::WriteOnly))
+    {
+        QMessageBox::warning(this, tr("TB Project"), tr("Cannot write file %1:\n%2.").arg(file.fileName()).arg(file.errorString()));
+        return false;
+    }
+
+
+    QXmlStreamWriter writer(&file);
+    writer.setAutoFormatting(true);
+    writer.writeStartDocument();
+    writer.writeStartElement("chain");
+    {
+        writer.writeStartElement("lead");
+        writer.writeAttribute("e_up"       , ui->lineEdit_lead1_1->text());
+        writer.writeAttribute("e_dn"       , ui->lineEdit_lead1_2->text());
+        writer.writeAttribute("t_up"       , ui->lineEdit_lead1_3->text());
+        writer.writeAttribute("t_dn"       , ui->lineEdit_lead1_4->text());
+        writer.writeAttribute("angle"      , ui->lineEdit_lead1_5->text());
+        writer.writeAttribute("temperature", ui->lineEdit_lead1_7->text());
+        writer.writeEndElement();
+    }
+    {
+        writer.writeStartElement("coupling");
+        writer.writeAttribute("value",ui->lineEdit_coupling_1->text());
+        writer.writeEndElement();
+    }
+    {
+        writer.writeStartElement("barrier");
+        writer.writeAttribute("e_up"       , ui->lineEdit_B1_1->text());
+        writer.writeAttribute("e_dn"       , ui->lineEdit_B1_2->text());
+        writer.writeAttribute("t_up"       , ui->lineEdit_B1_3->text());
+        writer.writeAttribute("t_dn"       , ui->lineEdit_B1_4->text());
+        writer.writeAttribute("angle"      , ui->lineEdit_B1_5->text());
+        writer.writeAttribute("thickness"  , ui->lineEdit_B1_6->text());
+        writer.writeEndElement();
+    }
+    {
+        writer.writeStartElement("coupling");
+        writer.writeAttribute("value",ui->lineEdit_coupling_2->text());
+        writer.writeEndElement();
+    }
+    {
+        writer.writeStartElement("lead");
+        writer.writeAttribute("e_up"       , ui->lineEdit_lead2_1->text());
+        writer.writeAttribute("e_dn"       , ui->lineEdit_lead2_2->text());
+        writer.writeAttribute("t_up"       , ui->lineEdit_lead2_3->text());
+        writer.writeAttribute("t_dn"       , ui->lineEdit_lead2_4->text());
+        writer.writeAttribute("angle"      , ui->lineEdit_lead2_5->text());
+        writer.writeAttribute("temperature", ui->lineEdit_lead2_7->text());
+        writer.writeEndElement();
+    }
+    writer.writeEndElement();
+    writer.writeEndDocument();
+
+
+    file.close();
+    if(file.error())
+    {
+        QMessageBox::warning(this, tr("TB Project"), tr("Cannot write file %1:\n%2.").arg(file.fileName()).arg(file.errorString()));
+        return false;
+    }
+    return true;
 }
-
-
-
-void TBProject::setUserParameters(const ChainSpec& data)
-{
-    userParameters = data;
-}
-
-
-
-void TBProject::run()
-{
-    std::cout << "Run!" << std::endl;
-    PythonQt::init();
-    PythonQtObjectPtr mainModule = PythonQt::self()->getMainModule();
-    PythonQtScriptingConsole console(NULL, mainModule);
-    //console.show();
-
-
-    QDir rootDir = QDir( QCoreApplication::applicationDirPath() );
-    rootDir.cdUp();
-    QString libPath = rootDir.path() + "/lib";
-    mainModule.evalScript(QString("import sys\n"));
-    mainModule.evalScript(QString("sys.path.append('%1')\n").arg(libPath));
-    mainModule.evalScript(QString("sys.path.append('%1')\n").arg("/usr/local/lib/python3.4/dist-packages"));
-    mainModule.evalScript(QString("sys.path.append('%1')\n").arg("/usr/lib/python3/dist-packages"));
-
-
-
-    //mainModule.addVariable("userParameters_c", userParameters.toQVariant());
-    mainModule.evalFile(":TBApp.py");
-}
-

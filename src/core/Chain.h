@@ -42,7 +42,7 @@ public:
 private:
 
     int _numLead = 0;
-    int _numBarrier = 0;
+    int _numBarrierAtom = 0;
     /*   mat   _H;
 	cx_mat _G_R;
 	cx_mat _G_L;*/

@@ -1,16 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#include "tbproject.h"
 #include <QMainWindow>
+#include <tbproject.h>
 
 
-
-namespace Ui
-{
-    class MainWindow;
+namespace Ui {
+class MainWindow;
 }
-
-
 
 class MainWindow : public QMainWindow
 {
@@ -19,22 +15,28 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void renewParameterPanel();
-    void setActive(bool state);
+
+private:
+    Ui::MainWindow* ui;
+    TBProject* project;
+    QString currentFile;
+
+protected:
+    void closeEvent(QCloseEvent* event);
+
+private:
+    bool loadFile(const QString& filename);
+    bool saveFile(const QString& filename);
+    void setCurrentFile(const QString& filename);
+    bool okToContinue();
 
 private slots:
     void onClick_newProject();
     void onClick_openProject();
     void onClick_openExample();
-    void onClick_saveProject();
-    void onClick_runProject();
-    void onClick_plot();
-
-private:
-    Ui::MainWindow *ui;
-    TBProject mProject;
+    bool onClick_save();
+    bool onClick_saveAs();
+    void onClick_about();
 };
-
-
 
 #endif // MAINWINDOW_H

@@ -50,6 +50,7 @@ Chain& Chain::operator<<(const Lead& obj)
 Chain& Chain::operator<<(const Insulator& obj)
 {
     this->barrier.push_back(obj);
+    _numBarrierAtom+=obj.numAtom;
     return *this;
 }
 
@@ -117,7 +118,7 @@ cx_mat Chain::G_R(const double o1, const double o2, const double E)
     cx_mat S_L = this->lead[0].S(o1, o2, E);
     cx_mat S_R = this->lead[1].S(o1, o2, E);
 
-    int sizeBarrier = 2*(this->barrier[0].numAtom); //TODO
+    int sizeBarrier = 2*_numBarrierAtom;
     cx_mat tmp[] = {S_L, zeros<cx_mat>(sizeBarrier,sizeBarrier), S_R};
     cx_mat S = blockDiag(tmp);
 
@@ -143,8 +144,8 @@ cx_mat Chain::G_L(const double o1, const double o2, const double E)
     //----------------------//
     // the Big Sigma
 
-    int dim_L = 2*(lead[0].numAtom + barrier[0].numAtom);
-    int dim_R = 2*(lead[1].numAtom + barrier[0].numAtom);
+    int dim_L = 2*(lead[0].numAtom + _numBarrierAtom);
+    int dim_R = 2*(lead[1].numAtom + _numBarrierAtom);
     cx_mat tmp_zeros_L = zeros<cx_mat>(dim_L, dim_L);
     cx_mat tmp_zeros_R = zeros<cx_mat>(dim_R, dim_R);
 

@@ -6,648 +6,146 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1185</width>
-    <height>650</height>
+    <width>524</width>
+    <height>422</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">QToolBar
-{
-    /*background: rgb(243, 235, 235);*/
-    spacing: 3px; /* spacing between items in the tool bar */
-}</string>
-  </property>
-  <widget class="QWidget" name="centralwidget">
+  <widget class="QWidget" name="centralWidget">
    <property name="styleSheet">
-    <string notr="true">QGroupBox
-{
-	border-width: 1px;
-	border-style: solid;
-	border-color:  gray;
-	border-radius: 3px;
-	margin-top: 1ex;
-	padding: 10px;
-}
-QGroupBox::title
-{
-	subcontrol-origin: margin;
-	subcontrol-position: top left;
-	left: 10px;
-	margin-left: 0px;
-	padding: 0px 1px;
-}</string>
+    <string notr="true"/>
    </property>
-   <layout class="QGridLayout" name="gridLayout_2">
-    <item row="1" column="1">
-     <widget class="QGroupBox" name="groupBox">
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="title">
-       <string>Parameters</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="5" column="1">
-        <widget class="QLineEdit" name="lineEdit_1_4"/>
-       </item>
-       <item row="10" column="1" colspan="3">
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="lineEdit_coupling_1"/>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="lineEdit_coupling_2"/>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item row="6" column="1">
-        <widget class="QLineEdit" name="lineEdit_1_5"/>
-       </item>
-       <item row="0" column="2">
-        <widget class="QComboBox" name="comboBox_material_2"/>
-       </item>
-       <item row="10" column="0">
-        <widget class="QLabel" name="label_13">
-         <property name="text">
-          <string>Coupling</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <widget class="QComboBox" name="comboBox_material_3"/>
-       </item>
-       <item row="2" column="3">
-        <widget class="QLineEdit" name="lineEdit_3_1"/>
-       </item>
-       <item row="8" column="2">
-        <widget class="QLineEdit" name="lineEdit_2_7"/>
-       </item>
-       <item row="3" column="3">
-        <widget class="QLineEdit" name="lineEdit_3_2"/>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="lineEdit_1_1"/>
-       </item>
-       <item row="7" column="2">
-        <widget class="QLineEdit" name="lineEdit_2_6"/>
-       </item>
-       <item row="6" column="2">
-        <widget class="QLineEdit" name="lineEdit_2_5"/>
-       </item>
-       <item row="7" column="1">
-        <widget class="QLineEdit" name="lineEdit_1_6"/>
-       </item>
-       <item row="1" column="1">
-        <widget class="Line" name="line_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="3">
-        <widget class="QLineEdit" name="lineEdit_3_3"/>
-       </item>
-       <item row="3" column="2">
-        <widget class="QLineEdit" name="lineEdit_2_2"/>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>t↓</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="3">
-        <widget class="QLineEdit" name="lineEdit_3_5"/>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>Material</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>Angle θ</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QLineEdit" name="lineEdit_1_3"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_1">
-         <property name="text">
-          <string>ε↑</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QLabel" name="label_8">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Temperature</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="Line" name="line_1">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="3">
-        <widget class="QLineEdit" name="lineEdit_3_4"/>
-       </item>
-       <item row="8" column="3">
-        <widget class="QLineEdit" name="lineEdit_3_7"/>
-       </item>
-       <item row="4" column="2">
-        <widget class="QLineEdit" name="lineEdit_2_3"/>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>t↑</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="2">
-        <widget class="QLineEdit" name="lineEdit_2_4"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>ε↓</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="Line" name="line_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="comboBox_material_1"/>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>Thickness</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2">
-        <widget class="QLineEdit" name="lineEdit_2_1"/>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="lineEdit_1_2"/>
-       </item>
-       <item row="8" column="1">
-        <widget class="QLineEdit" name="lineEdit_1_7"/>
-       </item>
-       <item row="7" column="3">
-        <widget class="QLineEdit" name="lineEdit_3_6"/>
-       </item>
-       <item row="9" column="0" colspan="4">
-        <widget class="Line" name="line">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="3">
-        <widget class="Line" name="line_4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QGroupBox" name="groupBox_2">
-      <property name="title">
-       <string>Plot</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="1">
-        <widget class="QPushButton" name="pushButton_plot_Tprl">
-         <property name="text">
-          <string>V - Tprl</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QPushButton" name="pushButton_plot_Tnml">
-         <property name="text">
-          <string>V - Tnml</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="pushButton_plot_Iz">
-         <property name="text">
-          <string>V - Iz</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QPushButton" name="pushButton_plot_I">
-         <property name="text">
-          <string>V - I</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QPushButton" name="pushButton_plot_TMR">
-         <property name="text">
-          <string>V - TMR</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QPushButton" name="pushButton_5">
-         <property name="text">
-          <string>PushButton</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QGroupBox" name="groupBox_3">
-      <property name="title">
-       <string>Bias</string>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>Min:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_bias_min">
-         <property name="minimum">
-          <double>-20.000000000000000</double>
-         </property>
-         <property name="maximum">
-          <double>20.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_11">
-         <property name="text">
-          <string>Max:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_bias_max">
-         <property name="minimum">
-          <double>-20.000000000000000</double>
-         </property>
-         <property name="maximum">
-          <double>20.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_12">
-         <property name="text">
-          <string>Num:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="spinBox_bias_num"/>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_6">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>nProc</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="spinBox_nproc">
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <number>20</number>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="0" rowspan="3">
-     <widget class="QGroupBox" name="groupBox_4">
-      <property name="title">
-       <string>Schema</string>
-      </property>
-      <property name="checkable">
-       <bool>false</bool>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <item>
-          <widget class="QLabel" name="label_10">
-           <property name="text">
-            <string>Layers</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="comboBox_numLayer">
-           <item>
-            <property name="text">
-             <string>3</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>5</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_5">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="Line" name="line_5">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QWidget" name="widget" native="true">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>500</width>
-           <height>400</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">image: url(:/drawable/3L.tiff);</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-    </item>
-   </layout>
+   <layout class="QGridLayout" name="gridLayout_2"/>
   </widget>
-  <widget class="QMenuBar" name="menubar">
+  <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1185</width>
+     <width>524</width>
      <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
-    <property name="tearOffEnabled">
-     <bool>false</bool>
-    </property>
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <property name="toolTipsVisible">
-     <bool>false</bool>
-    </property>
-    <addaction name="action_New_Project"/>
-    <addaction name="action_Open_Project"/>
-    <addaction name="action_Open_Example"/>
+    <addaction name="action_newProject"/>
+    <addaction name="action_openProject"/>
+    <addaction name="action_openExample"/>
+    <addaction name="action_save"/>
+    <addaction name="action_saveAs"/>
     <addaction name="separator"/>
-    <addaction name="action_Save_File"/>
+    <addaction name="action_close"/>
+    <addaction name="action_exit"/>
    </widget>
    <widget class="QMenu" name="menu_Run">
     <property name="title">
      <string>&amp;Run</string>
     </property>
-    <addaction name="action_Run"/>
-    <addaction name="action_Stop"/>
+    <addaction name="action_run"/>
+    <addaction name="action_stop"/>
    </widget>
-   <widget class="QMenu" name="menu_Plot">
+   <widget class="QMenu" name="menu_Help">
     <property name="title">
-     <string>&amp;Plot</string>
+     <string>&amp;Help</string>
     </property>
-    <addaction name="action_Plot"/>
+    <addaction name="action_about"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Run"/>
-   <addaction name="menu_Plot"/>
+   <addaction name="menu_Help"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QToolBar" name="toolBar">
-   <property name="windowTitle">
-    <string>toolBar</string>
-   </property>
+  <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
-    <enum>LeftToolBarArea</enum>
+    <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action_New_Project"/>
-   <addaction name="action_Open_Project"/>
-   <addaction name="action_Open_Example"/>
-   <addaction name="separator"/>
-   <addaction name="action_Run"/>
-   <addaction name="action_Stop"/>
-   <addaction name="separator"/>
-   <addaction name="action_Plot"/>
-   <addaction name="separator"/>
   </widget>
-  <action name="action_New_Project">
-   <property name="icon">
-    <iconset resource="../../res/res.qrc">
-     <normaloff>:/drawable/new_project.png</normaloff>:/drawable/new_project.png</iconset>
-   </property>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="action_newProject">
    <property name="text">
     <string>&amp;New Project</string>
    </property>
-  </action>
-  <action name="action_Open_Project">
-   <property name="icon">
-    <iconset resource="../../res/res.qrc">
-     <normaloff>:/drawable/open_project.png</normaloff>:/drawable/open_project.png</iconset>
+   <property name="toolTip">
+    <string>New Project</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="action_openProject">
    <property name="text">
     <string>&amp;Open Project</string>
    </property>
-  </action>
-  <action name="action_Run">
-   <property name="icon">
-    <iconset resource="../../res/res.qrc">
-     <normaloff>:/drawable/run.png</normaloff>:/drawable/run.png</iconset>
-   </property>
-   <property name="text">
-    <string>&amp;Run</string>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="action_Open_Example">
-   <property name="icon">
-    <iconset resource="../../res/res.qrc">
-     <normaloff>:/drawable/import.png</normaloff>:/drawable/import.png</iconset>
-   </property>
+  <action name="action_openExample">
    <property name="text">
     <string>Open &amp;Example</string>
    </property>
-  </action>
-  <action name="action_Stop">
-   <property name="icon">
-    <iconset resource="../../res/res.qrc">
-     <normaloff>:/drawable/stop_red_icon.png</normaloff>:/drawable/stop_red_icon.png</iconset>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
    </property>
+  </action>
+  <action name="action_run">
+   <property name="text">
+    <string>&amp;Run</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="action_stop">
    <property name="text">
     <string>&amp;Stop</string>
    </property>
-  </action>
-  <action name="action_Plot">
-   <property name="icon">
-    <iconset resource="../../res/res.qrc">
-     <normaloff>:/drawable/plot.png</normaloff>:/drawable/plot.png</iconset>
-   </property>
-   <property name="text">
-    <string>&amp;Plot</string>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
    </property>
   </action>
-  <action name="action_Save_File">
+  <action name="action_close">
    <property name="text">
-    <string>&amp;Save Project</string>
+    <string>&amp;Close</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
+   </property>
+  </action>
+  <action name="action_exit">
+   <property name="text">
+    <string>E&amp;xit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="action_save">
+   <property name="text">
+    <string>&amp;Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="action_saveAs">
+   <property name="text">
+    <string>Save &amp;As...</string>
+   </property>
+  </action>
+  <action name="action_about">
+   <property name="text">
+    <string>&amp;About</string>
    </property>
   </action>
  </widget>
- <resources>
-  <include location="../../res/res.qrc"/>
- </resources>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
  <connections/>
 </ui>

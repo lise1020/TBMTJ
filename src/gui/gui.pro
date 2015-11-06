@@ -1,35 +1,28 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2015-08-31T11:29:33
+# Project created by QtCreator 2015-11-06T11:39:15
 #
 #-------------------------------------------------
 
-QT       += core gui xml
-CONFIG   += c++11
+QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = gui
 TEMPLATE = app
-DESTDIR = ../../bin
-
-
-RESOURCES = ../../res/res.qrc
-
-include ( /opt/PythonQt3.0/build/PythonQt.prf )
 
 
 SOURCES += main.cpp\
-           mainwindow.cpp \
-           tbproject.cpp \
-           spec.cpp
-           PythonQtScriptingConsole.cpp
+        mainwindow.cpp \
+    portalwindow.cpp \
+    tbproject.cpp \
+    schema3layer.cpp
 
-HEADERS += mainwindow.h \
-           tbproject.h \
-           spec.h
-           PythonQtScriptingConsole.h
+HEADERS  += mainwindow.h \
+    portalwindow.h \
+    tbproject.h \
+    schema3layer.h
 
-FORMS   += mainwindow.ui
-
-
+FORMS    += mainwindow.ui \
+    portalwindow.ui \
+    tbproject.ui
