@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 #include "tbproject.h"
 #include <QMainWindow>
+#include <QLineEdit>
 
 
 
@@ -33,6 +34,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
     TBProject mProject;
+    void initUi();
+    //QVector<QLineEdit>
 };
 
 

@@ -29,6 +29,13 @@ MainWindow::~MainWindow()
 
 
 
+void MainWindow::initUi()
+{
+
+}
+
+
+
 void MainWindow::setActive(bool state)
 {
     if(state)
