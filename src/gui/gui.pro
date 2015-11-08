@@ -12,6 +12,9 @@ TARGET = gui
 TEMPLATE = app
 
 
+LIBS += -lglut
+
+
 SOURCES += main.cpp\
         mainwindow.cpp \
     portalwindow.cpp \

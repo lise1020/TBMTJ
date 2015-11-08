@@ -15,14 +15,19 @@ protected:
     void initializeGL();
     void resizeGL(int width, int height);
     void paintGL();
+    void mousePressEvent(QMouseEvent* event);
+    void mouseMoveEvent(QMouseEvent* event);
+    void mouseDoubleClickEvent(QMouseEvent* event);
 
 private:
     void draw();
+    void drawCuboid(const GLfloat center[], const GLfloat length[], const GLfloat color[]);
 
 private:
     GLfloat rotationX;
     GLfloat rotationY;
     GLfloat rotationZ;
+    QPoint lastPos;
 };
 
 
