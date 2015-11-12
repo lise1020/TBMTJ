@@ -5,27 +5,17 @@
 
 Schema3Layer::Schema3Layer(QWidget* parent): QOpenGLWidget(parent)
 {
-    //setFormat(QGLFormat(QGL::DoubleBuffer) | QGL::DepthBuffer);
-    rotationX = -21.0;
-    rotationY = -57.0;
-    rotationZ =   0.0;
+    rotationX =  0.0;
+    rotationY = 30.0;
+    rotationZ =  0.0;
 }
 
 
 
 void Schema3Layer::initializeGL()
 {
-    /* set viewing projection */
-    glMatrixMode(GL_PROJECTION);
-    glFrustum(-0.5F, 0.5F, -0.5F, 0.5F, 1.0F, 3.0F);
-
-    /* position viewer */
-    glMatrixMode(GL_MODELVIEW);
-    glTranslatef(0.0F, 0.0F, -2.0F);
-
-    /* position object */
-    glRotatef(30.0F, 1.0F, 0.0F, 0.0F);
-    glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
+    glClearColor(1.0, 1.0, 1.0, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
@@ -66,19 +56,22 @@ void Schema3Layer::draw()
     glRotatef(rotationZ, 0.0, 0.0, 0.0);
 
 
-    static GLfloat center1[3] = {1.0, 0.0, 0.0};
+    // Right
+    static GLfloat center1[3] = {1.5, 0.0, 0.0};
     static GLfloat  color1[3] = {0.0, 0.0, 1.0};
-    static GLfloat length1[3] = {0.5, 0.5, 0.5};
+    static GLfloat length1[3] = {1.0, 0.5, 0.5};
     drawCuboid(center1, length1, color1);
 
+    // Center
     static GLfloat center2[3] = {0.0, 0.0, 0.0};
     static GLfloat  color2[3] = {0.0, 1.0, 0.0};
     static GLfloat length2[3] = {0.5, 0.5, 0.5};
     drawCuboid(center2, length2, color2);
 
-    static GLfloat center3[3] = {-1.0, 0.0, 0.0};
-    static GLfloat  color3[3] = {1.0, 0.0 ,0.0 };
-    static GLfloat length3[3] = {0.5, 0.5, 0.5};
+    // Left
+    static GLfloat center3[3] = {-1.5, 0.0, 0.0};
+    static GLfloat  color3[3] = { 0.0, 0.0, 1.0};
+    static GLfloat length3[3] = { 1.0, 0.5, 0.5};
     drawCuboid(center3, length3, color3);
 
 
@@ -124,7 +117,9 @@ void Schema3Layer::drawCuboid(const GLfloat center[3], const GLfloat length[3], 
 {
     GLfloat xl = length[0], yl = length[1], zl = length[2];
     GLfloat xc = center[0], yc = center[1], zc = center[2];
-    glColor3f(color[0], color[1], color[2]);
+
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, color);
+    glMaterialf (GL_FRONT_AND_BACK, GL_SHININESS, 100);
 
     glBegin(GL_QUADS);
         /* Top */
