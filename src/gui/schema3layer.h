@@ -17,7 +17,6 @@ protected:
     void paintGL();
     void mousePressEvent(QMouseEvent* event);
     void mouseMoveEvent(QMouseEvent* event);
-    void mouseDoubleClickEvent(QMouseEvent* event);
 
 private:
     void draw();

@@ -15,10 +15,21 @@ Schema3Layer::Schema3Layer(QWidget* parent): QOpenGLWidget(parent)
 
 void Schema3Layer::initializeGL()
 {
-    glClearColor(1.0, 1.0, 1.0, 1.0);
-    glShadeModel(GL_FLAT);
+    /* set viewing projection */
+    glMatrixMode(GL_PROJECTION);
+    glFrustum(-0.5F, 0.5F, -0.5F, 0.5F, 1.0F, 3.0F);
+
+    /* position viewer */
+    glMatrixMode(GL_MODELVIEW);
+    glTranslatef(0.0F, 0.0F, -2.0F);
+
+    /* position object */
+    glRotatef(30.0F, 1.0F, 0.0F, 0.0F);
+    glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
+
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
 }
 
 
@@ -28,6 +39,8 @@ void Schema3Layer::resizeGL(int width, int height)
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+
+
     GLfloat x = GLfloat(width)/height;
     glFrustum(-x, +x, -1.0, +1.0, 4.0, 15.0);
     glMatrixMode(GL_MODELVIEW);
@@ -54,17 +67,17 @@ void Schema3Layer::draw()
 
 
     static GLfloat center1[3] = {1.0, 0.0, 0.0};
-    static GLfloat color1[3] = {0.0f,0.0f,1.0f};
+    static GLfloat  color1[3] = {0.0, 0.0, 1.0};
     static GLfloat length1[3] = {0.5, 0.5, 0.5};
     drawCuboid(center1, length1, color1);
 
     static GLfloat center2[3] = {0.0, 0.0, 0.0};
-    static GLfloat color2[3] = {0.0f,1.0f,0.0f};
+    static GLfloat  color2[3] = {0.0, 1.0, 0.0};
     static GLfloat length2[3] = {0.5, 0.5, 0.5};
     drawCuboid(center2, length2, color2);
 
     static GLfloat center3[3] = {-1.0, 0.0, 0.0};
-    static GLfloat color3[3] = {1.0f,0.0f,0.0f};
+    static GLfloat  color3[3] = {1.0, 0.0 ,0.0 };
     static GLfloat length3[3] = {0.5, 0.5, 0.5};
     drawCuboid(center3, length3, color3);
 
@@ -107,50 +120,45 @@ void Schema3Layer::mouseMoveEvent(QMouseEvent* event)
 
 
 
-void Schema3Layer::mouseDoubleClickEvent(QMouseEvent* event)
-{
-    //int face = faceAt
-}
-
-
-
 void Schema3Layer::drawCuboid(const GLfloat center[3], const GLfloat length[3], const GLfloat color[3])
 {
-    GLfloat xl = length[0];
-    GLfloat yl = length[1];
-    GLfloat zl = length[2];
-    GLfloat xc = center[0];
-    GLfloat yc = center[1];
-    GLfloat zc = center[2];
+    GLfloat xl = length[0], yl = length[1], zl = length[2];
+    GLfloat xc = center[0], yc = center[1], zc = center[2];
+    glColor3f(color[0], color[1], color[2]);
 
     glBegin(GL_QUADS);
-        glColor3f(color[0], color[1], color[2]);
         /* Top */
+        glNormal3f( 0.0F, 0.0F, 1.0F);
         glVertex3f( xl+xc, yl+yc,-zl+zc);
         glVertex3f(-xl+xc, yl+yc,-zl+zc);
         glVertex3f(-xl+xc, yl+yc, zl+zc);
         glVertex3f( xl+xc, yl+yc, zl+zc);
         /* Bottom */
+        glNormal3f( 0.0F, 0.0F,-1.0F);
         glVertex3f( xl+xc,-yl+yc, zl+zc);
         glVertex3f(-xl+xc,-yl+yc, zl+zc);
         glVertex3f(-xl+xc,-yl+yc,-zl+zc);
         glVertex3f( xl+xc,-yl+yc,-zl+zc);
         /* Front */
+        glNormal3f( 0.0F, 1.0F, 0.0F);
         glVertex3f( xl+xc, yl+yc, zl+zc);
         glVertex3f(-xl+xc, yl+yc, zl+zc);
         glVertex3f(-xl+xc,-yl+yc, zl+zc);
         glVertex3f( xl+xc,-yl+yc, zl+zc);
         /* Back */
+        glNormal3f( 0.0F,-1.0F, 0.0F);
         glVertex3f( xl+xc,-yl+yc,-zl+zc);
         glVertex3f(-xl+xc,-yl+yc,-zl+zc);
         glVertex3f(-xl+xc, yl+yc,-zl+zc);
         glVertex3f( xl+xc, yl+yc,-zl+zc);
         /* Left */
+        glNormal3f( 1.0F, 0.0F, 0.0F);
         glVertex3f(-xl+xc, yl+yc, zl+zc);
         glVertex3f(-xl+xc, yl+yc,-zl+zc);
         glVertex3f(-xl+xc,-yl+yc,-zl+zc);
         glVertex3f(-xl+xc,-yl+yc, zl+zc);
         /* Right */
+        glNormal3f(-1.0F, 0.0F, 0.0F);
         glVertex3f( xl+xc, yl+yc,-zl+zc);
         glVertex3f( xl+xc, yl+yc, zl+zc);
         glVertex3f( xl+xc,-yl+yc, zl+zc);
