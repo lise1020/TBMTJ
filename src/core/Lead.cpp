@@ -7,13 +7,6 @@ Atom(e_up, e_dn, t_up, t_dn, gamma, bias)
 {
     this->numAtom = 1;
     this->temperature = temperature;
-
-    /*G["x1x2"] = cx_mat22();
-    G["x1 0"] = cx_mat22();
-    G["x1-1"] = cx_mat22();
-    G["-8-1"] = cx_mat22();
-    G["-8 0"] = cx_mat22();
-    G["-1x2"] = cx_mat22();*/
 }
 
 

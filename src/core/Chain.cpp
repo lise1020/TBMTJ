@@ -1,4 +1,4 @@
-	#include "Chain.h"
+#include "Chain.h"
 #include <cstdarg>
 #include <cassert>
 
@@ -73,7 +73,7 @@ mat Chain::H(const double o1, const double o2)
     mat tmp[numLayer];
 
     tmp[ 0] = lead[0].H(o1, o2);
-    for( int i=1; i<=barrier.size(); tmp[i++]=barrier[i-1].H(o1,o2) )
+    for( unsigned i=1; i<=barrier.size(); tmp[i++]=barrier[i-1].H(o1,o2) )
     tmp[numLayer-1] = lead[1].H(o1, o2);
 
     mat H = blockDiag(numLayer,tmp);

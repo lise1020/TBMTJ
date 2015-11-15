@@ -309,7 +309,11 @@ QGroupBox::title
        <widget class="QLineEdit" name="lineEdit_lead2_1"/>
       </item>
       <item row="8" column="2">
-       <widget class="QLineEdit" name="lineEdit_B1_7"/>
+       <widget class="QLineEdit" name="lineEdit_B1_7">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
       <item row="3" column="3">
        <widget class="QLineEdit" name="lineEdit_lead2_2"/>
@@ -324,7 +328,11 @@ QGroupBox::title
        <widget class="QLineEdit" name="lineEdit_B1_5"/>
       </item>
       <item row="7" column="1">
-       <widget class="QLineEdit" name="lineEdit_lead1_6"/>
+       <widget class="QLineEdit" name="lineEdit_lead1_6">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
       <item row="1" column="1">
        <widget class="Line" name="line_2">
@@ -443,7 +451,11 @@ QGroupBox::title
        <widget class="QLineEdit" name="lineEdit_lead1_7"/>
       </item>
       <item row="7" column="3">
-       <widget class="QLineEdit" name="lineEdit_lead2_6"/>
+       <widget class="QLineEdit" name="lineEdit_lead2_6">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
       <item row="9" column="0" colspan="4">
        <widget class="Line" name="line">

@@ -10,13 +10,14 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = gui
 TEMPLATE = app
+DESTDIR = ../../bin
 
 
 LIBS += -lglut
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
+    mainwindow.cpp \
     portalwindow.cpp \
     tbproject.cpp \
     schema3layer.cpp

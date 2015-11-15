@@ -19,6 +19,8 @@ public:
 
 private:
     Ui::TBProject *ui;
+    QString readFileToString(const QString& filename);
+    bool writeStringToFile(const QString& filename, const QString& string);
 };
 
 #endif // TBPROJECT_H

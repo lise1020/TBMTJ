@@ -1,37 +1,43 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<project>
-    <general layer="3" bias="-0.2"/>
-
-    <lead name="Fe"
-        e_up="1.2"
-        e_dn="2.0"
-        t_up="-0.4"
-        t_dn="-0.4"
-        gamma="0"
-        temperature="300"
-        bias="0.0"/>
-    
-    <coupling value="-0.4, 0.0; 0.0, -0.4"/>
-    
-    <barrier name="MgO"
-    	e_up="5.4"
-        e_dn="5.4"
-        t_up="-0.4"
-        t_dn="-0.4"
-        gamma="0"
-        thickness="5"
-        lBias="0.0"
-        rBias="0.6"/>
-    
-    <coupling value="-0.4, 0.0; 0.0, -0.4"/>
-    
-    <lead name="Fe"
-    	e_up="1.2"
-        e_dn="2.0"
-        t_up="-0.4"
-        t_dn="-0.4"
-        gamma="pi/2"
-        temperature="300"
-        bias="0.6"/>
-    
-</project>
+{
+	"general": {
+		"layer": 3,
+		"bias": -0.2
+	},
+	"material": [
+		{
+			"name": "Fe",
+			"e_up": 1.2,
+			"e_dn": 2.0,
+			"t_up": -0.4,
+			"t_dn": -0.4,
+			"gamma": 0,
+            "temperature": 300,
+            "bias": 0.0
+		},
+		{
+			"name": "MgO",
+			"e_up": 5.4,
+			"e_dn": 5.4,
+			"t_up": -0.4,
+			"t_dn": -0.4,
+			"gamma": 0,
+            "thickness": 5,
+            "lBias": 0.0,
+        	"rBias": 0.6
+		},
+		{
+			"name": "Fe",
+			"e_up": 1.2,
+			"e_dn": 2.0,
+			"t_up": -0.4,
+			"t_dn": -0.4,
+			"gamma": "pi/2",
+            "temperature": 300,
+            "bias": 0.6
+		}
+	],
+	"coupling": [
+		"-0.4, 0.0; 0.0, -0.4",
+		"-0.4, 0.0; 0.0, -0.4"
+	]
+}
