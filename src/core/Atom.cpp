@@ -15,3 +15,16 @@ Atom::Atom(const double e_up, const double e_dn, const double t_up, const double
     this->t_dn = t_dn;
 }
 
+
+
+OnsiteEnergy& Atom::getOnsiteEnergy()
+{
+    return onsiteE;
+}
+
+
+
+HoppingElement& Atom::getHoppingElement()
+{
+    return hopping;
+}

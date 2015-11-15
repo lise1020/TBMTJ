@@ -19,9 +19,6 @@ public:
     cx_mat22 G_sinf(const double x1, const double x2, const double o1, const double o2, const double E);
     cx_mat22 S(const double o1, const double o2, const double E);
     mat22 H(const double o1, const double o2);
-
-
-    //map<string,cx_mat22> G;
 };
 
 

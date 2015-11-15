@@ -9,14 +9,6 @@ class Chain
 {
 public:
 
-    //Lead leadL, leadR;
-    //Insulator barrier;
-    //mat22 T1, T2;
-
-    vector<Lead> lead;
-    vector<Insulator> barrier;
-    vector<mat22> couplingT;
-
     Chain(){}
 
     /// (lL)-(T1)-(B)-(T2)-(lR)
@@ -43,10 +35,9 @@ private:
 
     int _numLead = 0;
     int _numBarrierAtom = 0;
-    /*   mat   _H;
-	cx_mat _G_R;
-	cx_mat _G_L;*/
-
+    vector<Lead> lead;
+    vector<Insulator> barrier;
+    vector<mat22> couplingT;
 };
 
 

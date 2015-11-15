@@ -6,12 +6,12 @@
 
 class OnsiteEnergy: public mat22
 {
-public:
-
+private:
     double e_up, e_dn;
     double t_up, t_dn;
     double gamma;
 
+public:
     OnsiteEnergy(){}
     OnsiteEnergy(double e_up, double e_dn, double t_up, double t_dn, double gamma);
     mat22 inKspace(double o1, double o2);

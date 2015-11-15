@@ -45,11 +45,11 @@ mat Insulator::H(const double o1, const double o2)
 
     for(int i=0; i<numAtom; i++)
     {
-        arrE[i] = this->atoms[i].onsiteE.inKspace(o1, o2);
+        arrE[i] = atoms[i].getOnsiteEnergy().inKspace(o1, o2);
     }
     for(int i=0; i<numAtom-1; i++)
     {
-        arrT[i] = this->atoms[i].hopping;
+        arrT[i] = atoms[i].getHoppingElement();
     }
 
 

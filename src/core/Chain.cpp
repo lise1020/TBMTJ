@@ -6,57 +6,45 @@
 
 Chain::Chain(const Lead& lL, const arma::mat& T1, const Insulator& B, const arma::mat& T2, const Lead& lR)
 {
-    /*this->leadL = lL;
-    this->leadR = lR;
-    this->barrier = B;
-
-    this->T1 = T1;
-    this->T2 = T2;*/
-
-    this->lead.push_back(lL);
-    this->lead.push_back(lR);
-    this->barrier.push_back(B);
-    this->couplingT.push_back(T1);
-    this->couplingT.push_back(T2);
+    lead.push_back(lL);
+    lead.push_back(lR);
+    barrier.push_back(B);
+    couplingT.push_back(T1);
+    couplingT.push_back(T2);
+    _numBarrierAtom+=B.numAtom; // TODO
 }
 
 
 
 Chain::Chain(const Lead& lL, const std::string& T1, const Insulator& B, const std::string& T2, const Lead& lR)
 {
-    /*this->leadL = lL;
-    this->leadR = lR;
-    this->barrier = B;
-
-    this->T1 = mat22(T1);
-    this->T2 = mat22(T2);*/
-
-    this->lead.push_back(lL);
-    this->lead.push_back(lR);
-    this->barrier.push_back(B);
-    this->couplingT.push_back( mat22(T1) );
-    this->couplingT.push_back( mat22(T2) );
+    lead.push_back(lL);
+    lead.push_back(lR);
+    barrier.push_back(B);
+    couplingT.push_back( mat22(T1) );
+    couplingT.push_back( mat22(T2) );
+    _numBarrierAtom+=B.numAtom; // TODO
 }
 
 
 
 Chain& Chain::operator<<(const Lead& obj)
 {
-    this->lead.push_back(obj);
+    lead.push_back(obj);
     assert(lead.size()<=2);
     return *this;
 }
 
 Chain& Chain::operator<<(const Insulator& obj)
 {
-    this->barrier.push_back(obj);
+    barrier.push_back(obj);
     _numBarrierAtom+=obj.numAtom;
     return *this;
 }
 
 Chain& Chain::operator<<(const std::string& obj)
 {
-    this->couplingT.push_back( mat22(obj) );
+    couplingT.push_back( mat22(obj) );
     return *this;
 }
 
@@ -72,7 +60,7 @@ mat Chain::H(const double o1, const double o2)
 
     mat tmp[numLayer];
 
-    tmp[ 0] = lead[0].H(o1, o2);
+    tmp[0] = lead[0].H(o1, o2);
     for( unsigned i=1; i<=barrier.size(); tmp[i++]=barrier[i-1].H(o1,o2) )
     tmp[numLayer-1] = lead[1].H(o1, o2);
 
@@ -84,7 +72,6 @@ mat Chain::H(const double o1, const double o2)
     vector<mat> tmp2;
 
     tmp2.push_back( couplingT[0] );
-
     for(int i=0, sizeBarrier; i<numBarrier; i++)
     {
         sizeBarrier = 2*(barrier[i].numAtom);
